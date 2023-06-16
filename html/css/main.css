@@ -1,8 +1,13 @@
+@font-face {
+    font-family: "SparK";
+    src: url("../fonts/MoldeCondensedBold.ttf");
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-.bg-button { background: #646475!important; }
+.bg-button { background: #ffffff30!important; }
 .text-check { color: rgba(255, 255, 255, 0.8)!important; }
-.text-checkbox { color: #0fffd5!important; }
+.text-checkbox { color: #0066ff!important; }
 .q-checkbox__svg { color: #000!important; }
 div#q-loading-bar { display: none!important; }
 ::-webkit-scrollbar { display: none!important; }
@@ -12,6 +17,10 @@ p { margin: 0 !important; }
 .text-h6 { color: #fff; }
 .q-card__section.q-card__section--vert.q-pt-none { color: #fff; }
 
+
+*{
+    font-family: "SparK";
+}
 @media screen and (min-width: 2540px) {
     #itembox-label {
         min-height: 1.8vh;
@@ -30,10 +39,10 @@ p { margin: 0 !important; }
 }
 
 .fas.fa-lock {
-    font-size: 22px;
+    font-size: 0px;
     top: -82px;
     right: 0px;
-    position: relative;
+    position: absolute;
 }
 
 .brand-logo {
@@ -51,7 +60,7 @@ p { margin: 0 !important; }
     line-height: 48px;
     text-transform: normal;
     font-size: 1.5vh;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "SparK";
   }
 
 /* rgb() */
@@ -74,28 +83,34 @@ input[type=number]::-webkit-outer-spin-button {
     width: 134.6%;
     margin-left: 0%;
     margin-top: 6.3%;
-    background-color: rgb(39 39 49);
+    background-color: rgba(0, 0, 0, 0.185);
 }
 
 #progressbar-other {
     width: 134.8%;
     margin-left: -1.5%;
     margin-top: 6.3%;
-    background-color: rgb(39 39 49);
+    background-color: rgba(7, 7, 7, 0.178);
 }
 
 .pro {
-    background: linear-gradient(to right, #0fffd5, #0b9a82 500px);
-    height: 10px;
+    background: linear-gradient(to right, #0066ff, #0099ff 500px);
+    height: 5px;
     max-width: 100%;
+    margin-top: 5%;
     transition: width 1s, background-color 1s;
+    border-radius: 2px;
+    filter: drop-shadow(1px 1px 8px #0066ff);
 }
 
 .pro1 {
-    background: linear-gradient(to right, #0fffd5, #0b9a82 500px);
-    height: 10px;
+    background: linear-gradient(to right, #ff4343, #ff42c0 500px);
+    height: 5px;
     max-width: 100%;
+    margin-top: 5%;
     transition: width 1s, background-color 1s;
+    border-radius: 2px;
+    filter: drop-shadow(1px 1px 8px #ff3edf);
 }
 
 .weight-img {
@@ -131,6 +146,7 @@ body {
     position: absolute;
     top: 0;
     left: 0;
+    background: #00000070;
     z-index: -1;
 }
 
@@ -149,7 +165,10 @@ body {
     max-width: 41%;
     height: 75%;
     max-height: 81%;
-    background: rgb(35 34 56 / 80%);
+    background: rgba(255, 255, 255, 0.10);
+    border: 2.5px #ffffff30;
+    border-style: solid;
+    border-radius: 5px;
 }
 
 .player-inventory {
@@ -176,7 +195,10 @@ body {
     max-width: 41%;
     height: 75%;
     max-height: 81%;
-    background: rgb(35 34 56 / 80%);
+    background: rgba(255, 255, 255, 0.10);
+    border: 2.5px #ffffff30;
+    border-style: solid;
+    border-radius: 5px;
 }
 
 .other-inventory {
@@ -202,15 +224,19 @@ body {
 
 .player-inventory > .item-slot > .item-slot-key > p {
     position: absolute;
-    font-weight: 400;
-    color: hsl(0deg 0% 0% / 15%);
-    padding-top: 5.7vh;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+    padding-top: 0.1vh;
     padding-bottom: 0px;
-    padding-left: 3.95vh;
-    text-align: left;
-    font-size: 9vh;
-    line-height: 1.8vh;
-    font-family: 'Roboto', sans-serif !important;
+    padding-left: 0.6vh;
+    background-color: #ffffff;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 10px;
+    font-size: 1.3vh;
+    line-height: 2.4vh;
+    letter-spacing: 0.9vh;
+    font-family: "SparK";
+    filter: drop-shadow(1px 1px 4px #ffff);
 }
 
 .inv-options {
@@ -218,9 +244,9 @@ body {
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 15px;
-    height: auto;
+    height: 20px;
     margin: 16% auto;
-    background: rgb(35 34 56 / 80%);
+    background: rgba(240, 11, 11, 0);
     right: 0px;
     width: 11%;
     left: 3vh;
@@ -241,8 +267,10 @@ body {
     width: 13.5vh;
     height: 13vh;
     float: left;
-    border: 1px solid rgba(255, 255, 255, 0.02);
-    background-color: rgb(102 102 113 / 30%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-width: 0.2px;
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.123) !important;
     margin: 2px;
     transition: opacity 0.2s ease 0s;
 }
@@ -253,6 +281,7 @@ body {
 
 .inv-option-item {
     margin-top: 10%;
+    
 }
 
 .btn-inv {
@@ -263,12 +292,13 @@ body {
 }
 
 #item-amount {
-    color: white;
+    color: rgb(255, 255, 255);
     text-align: center;
     font-size: 1.5vh;
     font-weight: 300;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "SparK";
     outline: none;
+    border-color: rgba(255, 254, 254, 0.329);
 }
 
 .ammo-info-block {
@@ -286,7 +316,7 @@ body {
     /* background-color: rgba(5, 5, 5, 0.5); */
     width: 100%;
     color: white;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "SparK";
     background-color: rgba(0, 0, 0, 0.192);
     font-size: 1.vh;
     padding: .4vh;
@@ -295,7 +325,7 @@ body {
 .ammo-info {
     position: relative;
     color: white;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "SparK";
     font-weight: 200;
     font-size: 1.vh;
     margin-left: .8vh;
@@ -311,20 +341,20 @@ body {
 .inv-option-item > p {
     color: white;
     text-align: center;
-    line-height: 48px;
-    text-transform: normal;
+    line-height: 48px; 
+    text-transform: uppercase;
     font-size: 1.5vh;
-    font-weight: 300;
-    font-family: 'Roboto', sans-serif !important;
+    font-weight: bold;
+    font-family: "SparK";
 }
 .inv-option-item > label {
     color: white;
     text-align: center;
     line-height: 48px;
-    text-transform: normal;
-    font-size: 1.5vh;
-    font-weight: 300;
-    font-family: 'Roboto', sans-serif !important;
+    text-transform: uppercase;
+    font-size: 1.8vh;
+    font-weight: bold;
+    font-family: "SparK";
     margin-right: 10px;
     margin-bottom: auto;
     margin-top: auto;
@@ -335,12 +365,14 @@ body {
     width: 100%;
     height: 50px;
     margin-left: 0%;
-    background-color: #646475 !important;
-    border: none;
-    color: white;
+    text-transform: uppercase;
+    background-color: #ffffff20 !important;
+    border: solid 1.5px;
+    color: rgba(255, 255, 255, 0.236);
     transition: background-color .1s linear;
-    border-radius: 0px!important;
+    border-radius: 4px!important;
 }
+
 .inv-option-hand {
     margin-top: 20%;
 /*     width: 80%; */
@@ -359,7 +391,13 @@ body {
     width: auto;
     top: 0px;
     left: 0px;
-    background-color: #646475 !important;
+    
+    text-transform: uppercase;
+    background-color: #ffffff20 !important;
+    border: solid 1px;
+    color: rgba(255, 255, 255, 0.236);
+    transition: background-color .1s linear;
+    border-radius: 4px!important;
     text-align: center;
     line-height: 48px;
     font-size: 1.2vh;
@@ -368,7 +406,6 @@ body {
     border-radius: 0px;
     border-width: 1px;
     border-style: solid;
-    border-color: rgba(255, 255, 255, 0.01);
     border-image: initial;
     transition: background-color 0.1s linear 0s;
 }
@@ -378,7 +415,7 @@ body {
     text-align: center;
     font-size: 1.5vh;
     font-weight: 300;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "SparK";
     outline: none;
 
 }
@@ -386,55 +423,66 @@ body {
 .item-slot-amount {
     position: absolute;
     bottom: 0.8vh;
-    left: 0.55vw;
+    left: 0.5vw;
+    top: 5px;
 }
 
 .item-slot-amount > p {
-    color: #ffffff;
+    color: rgba(255, 255, 255, 0.644);
     text-align: right;
-    font-size: 1.25vh;
+    font-size: 1vh;
     font-weight: 400;
     cursor: none;
 }
 
+
 .item-slot-amount > p:after {
-    content: "x"
+    content: "x";
 }
 
 .item-slot-name {
     position: absolute;
     bottom: 0.8vh;
-    right: 0.55vw;
+    right: 0.5vw;
+    top: 5px;
 }
 
 .item-slot-name > p {
-    color: #ffffff;
+    color: rgba(255, 255, 255, 0.644);
     text-align: right;
-    font-size: 1.25vh;
+    font-size: 1.0vh;
     font-weight: 400;
     cursor: none;
 }
 
 .item-slot-label {
     position: absolute;
-    top: 0%;
+    top: 82%;
+    height: 2.4vh;
     width: 100%;
-    background-color: transparent;
+    border-radius: 5px;
+    background-color: #00000031;
 }
 
 .item-slot-label > p {
     font-weight: 400;
+    top: 0vh;
+    margin-top: 8vh;
     padding: 2.5px;
+    position: relative;
     padding-left: 5px;
-    color: white;
-    font-size: 1.3vh;
-    text-align: left;
+    color: rgb(255, 255, 255);
+    filter: drop-shadow(1px 1px 2px #ffffff50);
+    font-size: 1.25vh;
+    text-transform: uppercase;
+    text-align: center;
     letter-spacing: 0px;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "SparK";
     white-space: pre;
     text-overflow: ellipsis;
     overflow: hidden;
     cursor: none;
+    
 }
 
 .item-slot-quality {
@@ -442,14 +490,17 @@ body {
     bottom: 0.2vh;
     width: 100%;
     height: 0.4vh;
-    background-color: rgba(32, 6, 6, 0.15);
+    background-color: rgba(32, 6, 6, 0);
 }
 
 .item-slot-quality-bar {
     position: absolute;
     width: 0%;
-    height: 150%;
-    background-color: #0fffd5;
+    bottom: 2vh;
+    height: 60%;
+    border-radius: 4px;
+    filter: drop-shadow(1px 1px 2px #BE04F6);
+    background-color: #ffffff00;
     z-index: 1;
 }
 
@@ -460,18 +511,32 @@ body {
 .item-slot-img {
     max-width: 100%;
     max-height: 100%;
-    padding: 0.5vw;
+    border-radius: 5px;
 }
 
 .item-slot-img img {
     display: block;
     position: relative;
     margin: 0 auto;
-    margin-top: 9%;
+    margin-top: 8%;
+    width: auto;
+    height: auto;
+    max-width: 92%;
+    background: #ffffff00;
+    max-height: 100%;
+    filter: drop-shadow(1px 1px 25px #ffffff8c);
+}
+
+.item-slot-img img:hover {
+    display: block;
+    position: relative;
+    margin: 0 auto;
+    margin-top: 8%;
     width: auto;
     height: auto;
     max-width: 92%;
     max-height: 100%;
+    transform: scale(1.2);
 }
 
 .item-slot-img-itembox img {
@@ -483,6 +548,7 @@ body {
     height: auto;
     max-width: 75%;
     max-height: 100%;
+    
 }
 
 .item-slot-img2 img {
@@ -490,9 +556,15 @@ body {
 }
 
 .ui-draggable-dragging {
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0);
+    filter: drop-shadow(1px 1px 12px #9900ffc4);
+    filter: blur(1px);
+    animation: pop 1s ease-in infinite;
+    transform: scale(1.0);
 }
-
+@keyframes pop{
+    50%  {transform: scale(0.9);}
+  }
 .player-inv-info {
     position: absolute;
     left: 3.3%;
@@ -506,12 +578,13 @@ body {
     position: relative;
     color: white;
     font-size: 20px;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "SparK";
     font-weight: 600;
     letter-spacing: 0.01vh;
     left: 0px;
     top: 25px;
     float: left;
+    filter: drop-shadow(1px 1px 5px #ffffff);
     text-transform: normal;
     cursor: none;
 }
@@ -521,7 +594,7 @@ body {
     color: rgb(255, 255, 255);
     font-size: 16px;
     font-weight: 900;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "SparK";
     letter-spacing: 0.1vh;
     bottom: 40px;
     right: -35%;
@@ -532,9 +605,11 @@ body {
     position: relative;
     color: white;
     font-size: 20px;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "SparK";
     font-weight: 600;
+    text-transform: uppercase;
     letter-spacing: 0.01vh;
+    filter: drop-shadow(1px 1px 5px #ffffff);
     left: -9px;
     top: 25px;
     float: left;
@@ -548,7 +623,7 @@ body {
     color: rgb(255, 255, 255);
     font-size: 16px;
     font-weight: 900;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "SparK";
     letter-spacing: 0.1vh;
     bottom: 40px;
     right: -33.5%;
@@ -565,7 +640,7 @@ body {
 .player-inv-weight > p {
     color: white;
     font-size: 12px;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "SparK";
 }
 
 .other-inv-info {
@@ -577,7 +652,7 @@ body {
 }
 
 .ply-iteminfo-container {
-    background: rgba(35, 34, 56, 0.90);
+    background: linear-gradient(#00ffea5d ,#00ff625e);
     border-radius: 3px;
     color: rgba(220, 220, 220, 1);
     border: 1px solid rgba(255, 255, 255, 0.02);
@@ -605,14 +680,14 @@ body {
     letter-spacing: 0.3px;
     line-height: 1;
     color: white;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "SparK";
     padding-top: 5px;
     padding-left: 5px;
 }
 
 .item-info-line {
     position: absolute;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "SparK";
     width: 85%;
     background-color: #6d6d6d96;
     height: 0.13vh;
@@ -624,7 +699,7 @@ body {
     font-weight: 400;
     line-height: 1.1;
     letter-spacing: 0.3px;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "SparK";
     color: white;
     padding-left: 5px;
     padding-top: .5vh;
@@ -668,7 +743,7 @@ body {
 #itembox-action > p {
     font-size: 14px;
     font-weight: 400;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "SparK";
     white-space: pre;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -678,7 +753,7 @@ body {
     position: absolute;
     bottom: 0;
     width: 100%;
-    background-color: #0fffd5;
+    background-color: #0066ff;
     height: 0.3vh;
 }
 
@@ -728,14 +803,14 @@ body {
     color: white;
     padding: 3px;
     font-size: 14px;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "SparK";
 }
 
 #requiredItem-label {
     position: absolute;
     bottom: 0;
     width: 100%;
-    background-color: #0fffd5;
+    background-color: #0066ff;
     height: 0.3vh;
 }
 
@@ -777,7 +852,8 @@ body {
 .z-hotbar-inventory > .z-hotbar-item-slot > .z-hotbar-item-slot-key > p {
     position: absolute;
     font-weight: 400;
-    color: rgba(0, 0, 0, 0.15);
+    color: rgba(255, 255, 255, 0.993);
+    filter: drop-shadow(1px 1px 8px #ffffff);
     padding-top: 5.7vh;
     padding-bottom: 0px;
     padding-left: 2.5vh;
@@ -798,14 +874,17 @@ body {
     margin: 3px;
     transition: opacity 0.2s;
     opacity: 1.0;
-    background: rgba(35, 34, 56, 0.95);
+    background: rgba(253, 253, 253, 0.226);
+    border: solid;
+    border-width: 2px;
+    border-color: #ffffff55;
     z-index: 9999;
 }
 
 .z-hotbar-item-slot-amount {
     position: absolute;
-    bottom: 0.8vh;
-    left: 0.55vw;
+    top: 0.1vh;
+    left: 0.2vw;
 }
 
 .z-hotbar-item-slot-amount > p {
@@ -820,7 +899,7 @@ body {
 
 .z-hotbar-item-slot-amount-name {
     position: absolute;
-    bottom: 0.8vh;
+    top: 0.1vh;
     right: 0.55vw;
 }
 
@@ -844,7 +923,7 @@ body {
     font-size: 11.5px;
     text-align: center;
     text-transform: lowercase;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "SparK";
     font-variant: small-caps;
 }
 
@@ -858,7 +937,7 @@ body {
     display: block;
     position: relative;
     margin: 0 auto;
-    margin-top: 9%;
+    margin-top: 4%;
     left: -16%;
     width: auto;
     height: auto;
@@ -915,7 +994,7 @@ body {
     bottom: 0;
     right: 0;
     margin: .3vh;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "SparK";
 }
 
 .ammo-box-amount {
@@ -957,7 +1036,7 @@ body {
     margin: 5vh;
     font-size: 3vh;
     color: rgb(255, 255, 255);
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "SparK";
 }
 
 .weapon-attachments-container-description {
@@ -966,7 +1045,7 @@ body {
     top: 5vh;
     font-size: 1.7vh;
     color: rgba(255, 255, 255, 0.8);
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "SparK";
 }
 
 .weapon-attachments-container-details {
@@ -975,7 +1054,7 @@ body {
     top: 9vh;
     font-size: 1.4vh;
     color: rgba(255, 255, 255, 0.8);
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "SparK";
 }
 
 .weapon-attachments-container-detail-durability {
@@ -988,7 +1067,7 @@ body {
 .weapon-attachments-container-detail-durability-total {
     height: 100%;
     width: 50%;
-    background-color: #0fffd5;
+    background-color: #0066ff;
 }
 
 .weapon-attachments-container-image {
@@ -1015,7 +1094,7 @@ body {
     left: 0;
     margin: 5vh;
     color: rgba(255, 255, 255, 0.8);
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "SparK";
     font-size: 1.4vh
 }
 
@@ -1050,7 +1129,7 @@ body {
     text-align: center;
     text-transform: uppercase;
     line-height: 1.9vh;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "SparK";
     font-weight: 100;
 }
 
@@ -1096,7 +1175,7 @@ body {
 }
 
 .weapon-attachments-remove-hover {
-    background-color: #0fffd5;
+    background-color: #0066ff;
 }
 
 .weapon-dragging-class {
@@ -1130,7 +1209,7 @@ body {
     text-align: center;
     line-height: 6vh;
     color: white;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "SparK";
     transition: .05s linear;
 }
 

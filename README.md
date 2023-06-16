@@ -22,20 +22,18 @@ In collaboration with [OnlyCats](https://github.com/onlycats) who helped reorgan
 * [qb-drugs](https://github.com/qbcore-framework/qb-drugs)
 * [qb-shops](https://github.com/qbcore-framework/qb-shops)
 
-# How to install lj-inventory (Latest QBCore Update)
+# How to install qb-inventory (Latest QBCore Update)
 * Download source files from github
 * Make sure you have latest updated [qb-core](https://github.com/qbcore-framework/qb-core)
 * Make sure you have latest updated [qb-smallresources](https://github.com/qbcore-framework/qb-smallresources)
 * Make sure you have latest updated [qb-weapons](https://github.com/qbcore-framework/qb-weapons)
 * Drag source files into your resources folder
-* Rename folder from `lj-inventory-main` to `lj-inventory`
-* Replace all qb-inventory to lj-inventory. Example below using Visual Studio Code in replacing all instances. 
-![image](https://user-images.githubusercontent.com/82112471/225484545-b2c79869-e7b4-4f37-81da-829e4430f73f.png)
- 
+* Rename folder from `qb-inventory-main` to `qb-inventory`
+* Replace all qb-inventory to qb-inventory. 
 
 # Key Features
 * ALL IMAGES FOLLOW THE SAME DIMENSIONS
-* Easy Photoshop guideline template for creating custom images within lj-inventory
+* Easy Photoshop guideline template for creating custom images within qb-inventory
 * Custom brand logo above option buttons
 * Options menu
 * Help box 
@@ -50,8 +48,8 @@ In collaboration with [OnlyCats](https://github.com/onlycats) who helped reorgan
 #
 
 # Previews
-### Simple guideline psd provided (found in main directory lj-inventory)
-![lj-inventory Guideline](https://user-images.githubusercontent.com/91661118/146315681-c67f542d-e2bc-43ca-9957-7f1971b84268.png)
+### Simple guideline psd provided (found in main directory qb-inventory)
+![qb-inventory Guideline](https://user-images.githubusercontent.com/91661118/146315681-c67f542d-e2bc-43ca-9957-7f1971b84268.png)
 ### Full Inventory
 ![full inventory](https://user-images.githubusercontent.com/91661118/146315750-1199a37e-88e0-4d48-86d3-ae0b85df6a72.png)
 ### Options Menu

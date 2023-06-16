@@ -21,7 +21,7 @@ app.use(Quasar, { config: {} })
 app.mount('#inventory-menus')
 
 function showBlur() {
-    $.post('https://lj-inventory/showBlur');
+    $.post('https://qb-inventory/showBlur');
 }
 
 var InventoryOption = "0, 0, 0";
@@ -67,7 +67,7 @@ $(document).on("dblclick", ".item-slot", function(e) {
     if (ItemData) {
         Inventory.Close();
         $.post(
-            "https://lj-inventory/UseItem",
+            "https://qb-inventory/UseItem",
             JSON.stringify({
                 inventory: ItemInventory,
                 item: ItemData,
@@ -248,29 +248,29 @@ $(document).on("click", ".weapon-attachments-back", function(e) {
     AttachmentScreenActive = false;
 });
 
-function changeInventoryColor(color) {
-    $( ".player-inventory-bg" ).css( "background-color", color);
-    $( ".other-inventory-bg" ).css( "background-color", color);
-    $( ".inv-options" ).css( "background-color", color);
-    localStorage.setItem('lj-inventory-color', color);
-}
+//function changeInventoryColor(color) {
+//    $( ".player-inventory-bg" ).css( "background-color", color);
+//    $( ".other-inventory-bg" ).css( "background-color", color);
+//    $( ".inv-options" ).css( "background-color", color);
+//    localStorage.setItem('qb-inventory-color', color);
+//}
 
-const savedColor = localStorage.getItem('lj-inventory-color');
+const savedColor = localStorage.getItem('qb-inventory-color');
 
 if (savedColor) {
-    changeInventoryColor(savedColor)
+    //changeInventoryColor(savedColor)
 }
 
 $('#favcolor').change(function(){
     let color = $(this).val();
     let hexOpacity = "CC";
     let finalColor = color+hexOpacity;
-    changeInventoryColor(finalColor);
+    //changeInventoryColor(finalColor);
 });
 
 function FormatAttachmentInfo(data) {
     $.post(
-        "https://lj-inventory/GetWeaponData",
+        "https://qb-inventory/GetWeaponData",
         JSON.stringify({
             weapon: data.name,
             ItemData: ClickedItemData,
@@ -368,7 +368,7 @@ function handleAttachmentDrag() {
         hoverClass: "weapon-attachments-remove-hover",
         drop: function(event, ui) {
             $.post(
-                "https://lj-inventory/RemoveAttachment",
+                "https://qb-inventory/RemoveAttachment",
                 JSON.stringify({
                     AttachmentData: AttachmentDraggingData,
                     WeaponData: ClickedItemData,
@@ -436,7 +436,7 @@ $(document).on("click", "#weapon-attachments", function(e) {
         FormatAttachmentInfo(ClickedItemData);
     } else {
         $.post(
-            "https://lj-inventory/Notify",
+            "https://qb-inventory/Notify",
             JSON.stringify({
                 message: "Attachments are unavailable for this gun.",
                 type: "error",
@@ -514,11 +514,31 @@ function FormatItemInfo(itemData, dom) {
                 "</span></p><p><strong>CSN: </strong><span>" +
                 itemData.info.citizenid +
                 "</span></p>"
-            );
+            );        } else if (itemData.name == "syphoningkit") { // Syphoning Kit (CDN-Fuel or CDN-Syphoning!)
+                $(".item-info-title").html("<p>" + itemData.label + "</p>");
+                $(".item-info-description").html(
+                    "<p>" + "A kit used to syphon gasoline from vehicles! <br><br>" + itemData.info.gasamount + " Liters Inside.</p>" +
+                    "</span></p><p style=\"padding-top: .8vh;font-size:11px\"><b>Weight: </b>" + ((itemData.weight * itemData.amount) / 1000).toFixed(1) + " | <b>Amount: </b> " + itemData.amount
+                );
+            } else if (itemData.name == "jerrycan") { // Jerry Can (CDN-Fuel!)
+                $(".item-info-title").html("<p>" + itemData.label + "</p>");
+                $(".item-info-description").html(
+                    "<p>" + "A Jerry Can, designed to hold fuel! <br><br>" + itemData.info.gasamount + " Liters Inside.</p>" +
+                    "</span></p><p style=\"padding-top: .8vh;font-size:11px\"><b>Weight: </b>" + ((itemData.weight * itemData.amount) / 1000).toFixed(1) + " | <b>Amount: </b> " + itemData.amount
+                );
         } else if (itemData.name == "harness") {
             $(".item-info-title").html("<p>" + itemData.label + "</p>");
             $(".item-info-description").html(
                 "<p>" + itemData.info.uses + " uses left.</p>"
+            );
+        }  else if (itemData.name == "renting_contract") {
+            $(".item-info-title").html("<p>" + itemData.label + "</p>");
+            $(".item-info-description").html("<p>Name: " + itemData.info.name + "</p> <p>Vehicle Plate: " + itemData.info.plate + "</p> <p>Renting Time: " + itemData.info.time + "</p> <p>Paid Price: " + itemData.info.price + "</p> <p>Vehicle Model: " + itemData.info.vehiclename + "</p>");
+        } else if (itemData.name == "mechboard") {
+            $(".item-info-title").html("<p>" + itemData.label + "</p>");
+            $(".item-info-description").html(
+                "<p>" + itemData.info.vehplate + "</p>" +
+                "<p>" + itemData.info.veh + "</p>"
             );
         } else if (itemData.type == "weapon") {
             $(".item-info-title").html("<p>" + itemData.label + "</p>");
@@ -556,56 +576,161 @@ function FormatItemInfo(itemData, dom) {
                     "</p>"
                 );
             }
+        } else if (itemData.name == "document") {
+            $(".item-info-title").html("<p>" + "Document" + "</p>");
+            $(".item-info-description").html(
+                "<p><strong>Document ID: </strong><span>" +
+                itemData.info.documentidentifier +
+                "</span></p><p><strong>Document Name: </strong><span>" +
+                itemData.info.documentname +
+                "</span></p><p><strong>Creator: </strong><span>" +
+                itemData.info.documentcreator +
+                "</span></p>"
+            );
         } else if (itemData.name == "filled_evidence_bag") {
             $(".item-info-title").html("<p>" + itemData.label + "</p>");
             if (itemData.info.type == "casing") {
                 $(".item-info-description").html(
-                    "<p><strong>Evidence material: </strong><span>" +
-                    itemData.info.label +
-                    "</span></p><p><strong>Type number: </strong><span>" +
-                    itemData.info.ammotype +
+                    "<p><strong>Type: </strong><span>" +
+                    itemData.info.label +  
+                    "</span></p><p><strong>Tracking ID: </strong><span>" +
+                    itemData.info.tracking +
+                    "</span></p><p><strong>Date: </strong><span>" +
+                    itemData.info.date +
+                    "</span></p><p><strong>Collected: </strong><span>" +
+                    itemData.info.street +
                     "</span></p><p><strong>Caliber: </strong><span>" +
                     itemData.info.ammolabel +
-                    "</span></p><p><strong>Serial: </strong><span>" +
+                    "</span></p><p><strong>Serial Number: </strong><span>" +
                     itemData.info.serie +
-                    "</span></p><p><strong>Crime scene: </strong><span>" +
-                    itemData.info.street +
                     "</span></p><br /><p>" +
                     itemData.description +
                     "</p>"
                 );
             } else if (itemData.info.type == "blood") {
                 $(".item-info-description").html(
-                    "<p><strong>Evidence material: </strong><span>" +
+                    "<p><strong>Type: </strong><span>" +
                     itemData.info.label +
-                    "</span></p><p><strong>Blood type: </strong><span>" +
+                    "</span></p><p><strong>Tracking ID: </strong><span>" +
+                    itemData.info.tracking +
+                    "</span></p><p><strong>Date: </strong><span>" +
+                    itemData.info.date +
+                    "</span></p><p><strong>Collected: </strong><span>" +
+                    itemData.info.street +
+                    "</span></p><p><strong>Blood Type: </strong><span>" +
                     itemData.info.bloodtype +
                     "</span></p><p><strong>DNA Code: </strong><span>" +
                     itemData.info.dnalabel +
-                    "</span></p><p><strong>Crime scene: </strong><span>" +
-                    itemData.info.street +
                     "</span></p><br /><p>" +
                     itemData.description +
                     "</p>"
                 );
             } else if (itemData.info.type == "fingerprint") {
                 $(".item-info-description").html(
-                    "<p><strong>Evidence material: </strong><span>" +
+                    "<p><strong>Type: </strong><span>" +
                     itemData.info.label +
+                    "</span></p><p><strong>Tracking ID: </strong><span>" +
+                    itemData.info.tracking +
+                    "<p><strong>Date: </strong><span>" +
+                    itemData.info.date +
+                    "</span></p><p><strong>Collected: </strong><span>" +
+                    itemData.info.street +
                     "</span></p><p><strong>Fingerprint: </strong><span>" +
                     itemData.info.fingerprint +
-                    "</span></p><p><strong>Crime Scene: </strong><span>" +
+                    "</span></p><br /><p>" +
+                    itemData.description +
+                    "</p>"
+                );
+            } else if (itemData.info.type == "fragment") {
+                $(".item-info-description").html(
+                    "<p><strong>Type: </strong><span>" +
+                    itemData.info.label +
+                    "</span></p><p><strong>Tracking ID: </strong><span>" +
+                    itemData.info.tracking +
+                    "</span></p><p><strong>Date: </strong><span>" +
+                    itemData.info.date +
+                    "</span></p><p><strong>Collected: </strong><span>" +
+                    itemData.info.street +
+                    "</span></p><p><strong>Vehicle: </strong><span>" +
+                    itemData.info.vehname +
+                    "</span></p><p><strong>Color: </strong><span>" +
+                    itemData.info.vehcolor +
+                    "</span></p><p><strong>VIN Match: </strong><span>" +
+                    itemData.info.plate +
+                    "</span></p><br /><p>" +
+                    itemData.description +
+                    "</p>"
+                );
+            } else if (itemData.info.type == "gsr") {
+                $(".item-info-description").html(
+                    "<p><strong>Type: </strong><span>" +
+                    itemData.info.label +
+                    "</span></p><strong>Tracking ID: </strong><span>" +
+                    itemData.info.tracking +
+                    "</span></p><p><strong>Date: </strong><span>" +
+                    itemData.info.date +
+                    "</span></p><p><strong>Conducted: </strong><span>" +
                     itemData.info.street +
                     "</span></p><br /><p>" +
                     itemData.description +
                     "</p>"
                 );
+            } else if (itemData.info.type == "bac") {
+                $(".item-info-description").html(
+                    "<p><strong>Type: </strong><span>" +
+                    itemData.info.label +
+                    "</span></p><strong>Tracking ID: </strong><span>" +
+                    itemData.info.tracking +
+                    "</span></p><p><strong>Result: </strong><span>" +
+                    itemData.info.result +
+                    "<p><strong>Date: </strong><span>" +
+                    itemData.info.date +
+                    "</span></p><p><strong>Conducted: </strong><span>" +
+                    itemData.info.street +
+                    "</span></p><br /><p>" +
+                    itemData.description +
+                    "</p>"
+                );
+            } else if (itemData.info.type == "drugtest") {
+                $(".item-info-description").html(
+                    "<p><strong>Type: </strong><span>" +
+                    itemData.info.label +
+                    "</span></p><p><strong>Date: </strong><span>" +
+                    itemData.info.date +
+                    "</span></p><p><strong>Conducted: </strong><span>" +
+                    itemData.info.street +
+                    "</span></p><strong>Tracking ID: </strong><span>" +
+                    itemData.info.tracking + "<br /><p>" +
+                    itemData.info.result + "</p><br /><p>" +
+                    itemData.description +
+                    "</p>"
+                );
+            } else if (itemData.info.type == "item") {
+                $(".item-info-description").html(
+                    "<p><strong>Type: </strong><span>" +
+                    itemData.info.label +
+                    "</span></p><p><strong>Date: </strong><span>" +
+                    itemData.info.date +
+                    "</span></p><p><strong>Recovered: </strong><span>" +
+                    itemData.info.street +
+                    "</span></p><strong>Tracking ID: </strong><span>" +
+                    itemData.info.tracking + "<br /><p>" +
+                    itemData.info.iteminfo + "</p><br /><p>" +
+                    itemData.description +
+                    "</p>"
+                );
             } else if (itemData.info.type == "dna") {
                 $(".item-info-description").html(
-                    "<p><strong>Evidence material: </strong><span>" +
+                    "<p><strong>Type: </strong><span>" +
                     itemData.info.label +
+                    "</span></p><strong>Tracking ID: </strong><span>" +
+                    itemData.info.tracking +
                     "</span></p><p><strong>DNA Code: </strong><span>" +
                     itemData.info.dnalabel +
+                    "<p><strong>Date: </strong><span>" +
+                    itemData.info.date +
+                    "</span></p><p><strong>Conducted: </strong><span>" +
+                    itemData.info.street +
                     "</span></p><br /><p>" +
                     itemData.description +
                     "</p>"
@@ -626,6 +751,15 @@ function FormatItemInfo(itemData, dom) {
                 "<p><strong>Amount of cash: </strong><span>$" +
                 itemData.info.cash +
                 "</span></p>"
+            );
+        } else if (itemData.name == "mdtcitation") {
+            $(".item-info-title").html("<p>" + itemData.label + "</p>");
+            $(".item-info-description").html(
+                '<p><strong>Citizen ID: </strong><span>' + itemData.info.citizenId + '</span></p>' +
+                '<p><strong>Fine: </strong><span>' + itemData.info.fine + '</span></p>' +
+                '<p><strong>Citation Date: </strong><span>' + itemData.info.date + '</span></p>' +
+                '<p><strong>Incident ID: </strong><span>' + itemData.info.incidentId + '</span></p>' +
+                '<p><strong>Involved Officer: </strong><span>' + itemData.info.officer + '</span></p>'
             );
         } else if (itemData.name == "markedbills") {
             $(".item-info-title").html("<p>" + itemData.label + "</p>");
@@ -823,7 +957,7 @@ function handleDragDrop() {
                     Inventory.Close();
                 }
                 $.post(
-                    "https://lj-inventory/UseItem",
+                    "https://qb-inventory/UseItem",
                     JSON.stringify({
                         inventory: fromInventory,
                         item: fromData,
@@ -847,7 +981,7 @@ function handleDragDrop() {
             }
             $(this).css("background", "rgba(35,35,35, 0.7");
             $.post(
-                "https://lj-inventory/DropItem",
+                "https://qb-inventory/DropItem",
                 JSON.stringify({
                     inventory: fromInventory,
                     item: fromData,
@@ -1069,7 +1203,7 @@ function updateweights($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
     var per =(totalWeight/1000)/(playerMaxWeight/100000)
     $(".pro").css("width",per+"%")
     $("#player-inv-weight").html(
-        '<i class="fas fa-dumbbell"></i> ' +
+        '<i class="fas fa-suitcase"></i> ' +
         (parseInt(totalWeight) / 1000).toFixed(2) +
         "/" +
         (playerMaxWeight / 1000).toFixed(2)
@@ -1082,7 +1216,7 @@ function updateweights($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
     ) {
         $("#other-inv-label").html(otherLabel);
         $("#other-inv-weight").html(
-            '<i class="fas fa-dumbbell"></i> ' +
+            '<i class="fas fa-weight-hanging"></i> ' +
             (parseInt(totalWeightOther) / 1000).toFixed(2) +
             "/" +
             (otherMaxWeight / 1000).toFixed(2)
@@ -1100,7 +1234,7 @@ $(document).on("click", ".CombineItem", function(e) {
     e.preventDefault();
     if (combineslotData.toData.combinable.anim != null) {
         $.post(
-            "https://lj-inventory/combineWithAnim",
+            "https://qb-inventory/combineWithAnim",
             JSON.stringify({
                 combineData: combineslotData.toData.combinable,
                 usedItem: combineslotData.toData.name,
@@ -1109,7 +1243,7 @@ $(document).on("click", ".CombineItem", function(e) {
         );
     } else {
         $.post(
-            "https://lj-inventory/combineItem",
+            "https://qb-inventory/combineItem",
             JSON.stringify({
                 reward: combineslotData.toData.combinable.reward,
                 toItem: combineslotData.toData.name,
@@ -1235,7 +1369,7 @@ function optionSwitch(
     }
 
     $.post(
-        "https://lj-inventory/SetInventoryData",
+        "https://qb-inventory/SetInventoryData",
         JSON.stringify({
             fromInventory: $fromInv.attr("data-inventory"),
             toInventory: $toInv.attr("data-inventory"),
@@ -1377,13 +1511,13 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
                         if (newData.info.quality == undefined) {
                             newData.info.quality = 100.0;
                         }
-                        var QualityColor = "rgb(15, 255, 213)";
+                        var QualityColor = "rgb(190,4,246)";
                         if (newData.info.quality < 25) {
-                            QualityColor = "rgb(192, 57, 43)";
+                            QualityColor = "rgb(190,4,246)";
                         } else if (newData.info.quality > 25 && newData.info.quality < 50) {
-                            QualityColor = "rgb(230, 126, 34)";
+                            QualityColor = "rgb(190,4,246)";
                         } else if (newData.info.quality >= 50) {
-                            QualityColor = "rgb(15, 255, 213)";
+                            QualityColor = "rgb(190,4,246)";
                         }
                         if (newData.info.quality !== undefined) {
                             qualityLabel = newData.info.quality.toFixed();
@@ -1502,13 +1636,13 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
                         if (newData.info.quality == undefined) {
                             newData.info.quality = 100.0;
                         }
-                        var QualityColor = "rgb(15, 255, 213)";
+                        var QualityColor = "rgb(190,4,246)";
                         if (newData.info.quality < 25) {
-                            QualityColor = "rgb(192, 57, 43)";
+                            QualityColor = "rgb(190,4,246)";
                         } else if (newData.info.quality > 25 && newData.info.quality < 50) {
-                            QualityColor = "rgb(230, 126, 34)";
+                            QualityColor = "rgb(190,4,246)";
                         } else if (newData.info.quality >= 50) {
-                            QualityColor = "rgb(15, 255, 213)";
+                            QualityColor = "rgb(190,4,246)";
                         }
                         if (newData.info.quality !== undefined) {
                             qualityLabel = newData.info.quality.toFixed();
@@ -1637,16 +1771,16 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
                             if (newDataFrom.info.quality == undefined) {
                                 newDataFrom.info.quality = 100.0;
                             }
-                            var QualityColor = "rgb(15, 255, 213)";
+                            var QualityColor = "rgb(190,4,246)";
                             if (newDataFrom.info.quality < 25) {
-                                QualityColor = "rgb(192, 57, 43)";
+                                QualityColor = "rgb(190,4,246)";
                             } else if (
                                 newDataFrom.info.quality > 25 &&
                                 newDataFrom.info.quality < 50
                             ) {
-                                QualityColor = "rgb(230, 126, 34)";
+                                QualityColor = "rgb(190,4,246)";
                             } else if (newDataFrom.info.quality >= 50) {
-                                QualityColor = "rgb(15, 255, 213)";
+                                QualityColor = "rgb(190,4,246)";
                             }
                             if (newDataFrom.info.quality !== undefined) {
                                 qualityLabel = newDataFrom.info.quality.toFixed();
@@ -1669,9 +1803,9 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
                     }
                 }
             }
-            $.post("https://lj-inventory/PlayDropSound", JSON.stringify({}));
+            $.post("https://qb-inventory/PlayDropSound", JSON.stringify({}));
             $.post(
-                "https://lj-inventory/SetInventoryData",
+                "https://qb-inventory/SetInventoryData",
                 JSON.stringify({
                     fromInventory: $fromInv.attr("data-inventory"),
                     toInventory: $toInv.attr("data-inventory"),
@@ -1688,7 +1822,7 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
                     isItemAllowed(fromData.name, toData.combinable.accept)
                 ) {
                     $.post(
-                        "https://lj-inventory/getCombineItem",
+                        "https://qb-inventory/getCombineItem",
                         JSON.stringify({ item: toData.combinable.reward }),
                         function(item) {
                             $(".combine-option-text").html(
@@ -1785,16 +1919,16 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
                         if (fromData.info.quality == undefined) {
                             fromData.info.quality = 100.0;
                         }
-                        var QualityColor = "rgb(15, 255, 213)";
+                        var QualityColor = "rgb(190,4,246)";
                         if (fromData.info.quality < 25) {
-                            QualityColor = "rgb(192, 57, 43)";
+                            QualityColor = "rgb(190,4,246)";
                         } else if (
                             fromData.info.quality > 25 &&
                             fromData.info.quality < 50
                         ) {
-                            QualityColor = "rgb(230, 126, 34)";
+                            QualityColor = "rgb(190,4,246)";
                         } else if (fromData.info.quality >= 50) {
-                            QualityColor = "rgb(15, 255, 213)";
+                            QualityColor = "rgb(190,4,246)";
                         }
                         if (fromData.info.quality !== undefined) {
                             qualityLabel = fromData.info.quality.toFixed();
@@ -1897,13 +2031,13 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
                             if (toData.info.quality == undefined) {
                                 toData.info.quality = 100.0;
                             }
-                            var QualityColor = "rgb(15, 255, 213)";
+                            var QualityColor = "rgb(190,4,246)";
                             if (toData.info.quality < 25) {
-                                QualityColor = "rgb(192, 57, 43)";
+                                QualityColor = "rgb(190,4,246)";
                             } else if (toData.info.quality > 25 && toData.info.quality < 50) {
-                                QualityColor = "rgb(230, 126, 34)";
+                                QualityColor = "rgb(190,4,246)";
                             } else if (toData.info.quality >= 50) {
-                                QualityColor = "rgb(15, 255, 213)";
+                                QualityColor = "rgb(190,4,246)";
                             }
                             if (toData.info.quality !== undefined) {
                                 qualityLabel = toData.info.quality.toFixed();
@@ -1926,7 +2060,7 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
                     }
 
                     $.post(
-                        "https://lj-inventory/SetInventoryData",
+                        "https://qb-inventory/SetInventoryData",
                         JSON.stringify({
                             fromInventory: $fromInv.attr("data-inventory"),
                             toInventory: $toInv.attr("data-inventory"),
@@ -1972,7 +2106,7 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
                     }
 
                     $.post(
-                        "https://lj-inventory/SetInventoryData",
+                        "https://qb-inventory/SetInventoryData",
                         JSON.stringify({
                             fromInventory: $fromInv.attr("data-inventory"),
                             toInventory: $toInv.attr("data-inventory"),
@@ -1982,7 +2116,7 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
                         })
                     );
                 }
-                $.post("https://lj-inventory/PlayDropSound", JSON.stringify({}));
+                $.post("https://qb-inventory/PlayDropSound", JSON.stringify({}));
             } else if (
                 fromData.amount > $toAmount &&
                 (toData == undefined || toData == null)
@@ -2073,16 +2207,16 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
                         if (newDataTo.info.quality == undefined) {
                             newDataTo.info.quality = 100.0;
                         }
-                        var QualityColor = "rgb(15, 255, 213)";
+                        var QualityColor = "rgb(190,4,246)";
                         if (newDataTo.info.quality < 25) {
-                            QualityColor = "rgb(192, 57, 43)";
+                            QualityColor = "rgb(190,4,246)";
                         } else if (
                             newDataTo.info.quality > 25 &&
                             newDataTo.info.quality < 50
                         ) {
-                            QualityColor = "rgb(230, 126, 34)";
+                            QualityColor = "rgb(190,4,246)";
                         } else if (newDataTo.info.quality >= 50) {
-                            QualityColor = "rgb(15, 255, 213)";
+                            QualityColor = "rgb(190,4,246)";
                         }
                         if (newDataTo.info.quality !== undefined) {
                             qualityLabel = newDataTo.info.quality.toFixed();
@@ -2224,16 +2358,16 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
                             if (newDataFrom.info.quality == undefined) {
                                 newDataFrom.info.quality = 100.0;
                             }
-                            var QualityColor = "rgb(15, 255, 213)";
+                            var QualityColor = "rgb(190,4,246)";
                             if (newDataFrom.info.quality < 25) {
-                                QualityColor = "rgb(192, 57, 43)";
+                                QualityColor = "rgb(190,4,246)";
                             } else if (
                                 newDataFrom.info.quality > 25 &&
                                 newDataFrom.info.quality < 50
                             ) {
-                                QualityColor = "rgb(230, 126, 34)";
+                                QualityColor = "rgb(190,4,246)";
                             } else if (newDataFrom.info.quality >= 50) {
-                                QualityColor = "rgb(15, 255, 213)";
+                                QualityColor = "rgb(190,4,246)";
                             }
                             if (newDataFrom.info.quality !== undefined) {
                                 qualityLabel = newDataFrom.info.quality.toFixed();
@@ -2255,9 +2389,9 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount) {
                         }
                     }
                 }
-                $.post("https://lj-inventory/PlayDropSound", JSON.stringify({}));
+                $.post("https://qb-inventory/PlayDropSound", JSON.stringify({}));
                 $.post(
-                    "https://lj-inventory/SetInventoryData",
+                    "https://qb-inventory/SetInventoryData",
                     JSON.stringify({
                         fromInventory: $fromInv.attr("data-inventory"),
                         toInventory: $toInv.attr("data-inventory"),
@@ -2296,7 +2430,7 @@ function InventoryError($elinv, $elslot) {
             .find("[data-slot=" + $elslot + "]")
             .css("background", "rgba(255, 255, 255, 0.3)");
     }, 500);
-    $.post("https://lj-inventory/PlayDropFail", JSON.stringify({}));
+    $.post("https://qb-inventory/PlayDropFail", JSON.stringify({}));
 }
 
 var requiredItemOpen = false;
@@ -2307,11 +2441,11 @@ var requiredItemOpen = false;
     Inventory.slots = 40;
 
     Inventory.dropslots = 30;
-    Inventory.droplabel = "Drop";
+    Inventory.droplabel = "GROUND";
     Inventory.dropmaxweight = 100000;
 
     Inventory.Error = function() {
-        $.post("https://lj-inventory/PlayDropFail", JSON.stringify({}));
+        $.post("https://qb-inventory/PlayDropFail", JSON.stringify({}));
     };
 
     Inventory.IsWeaponBlocked = function(WeaponName) {
@@ -2335,13 +2469,13 @@ var requiredItemOpen = false;
                 if (item.info.quality == undefined) {
                     item.info.quality = 100;
                 }
-                var QualityColor = "rgb(15, 255, 213)";
+                var QualityColor = "rgb(190,4,246)";
                 if (item.info.quality < 25) {
-                    QualityColor = "rgb(192, 57, 43)";
+                    QualityColor = "rgb(190,4,246)";
                 } else if (item.info.quality > 25 && item.info.quality < 50) {
-                    QualityColor = "rgb(230, 126, 34)";
+                    QualityColor = "rgb(190,4,246)";
                 } else if (item.info.quality >= 50) {
-                    QualityColor = "rgb(15, 255, 213)";
+                    QualityColor = "rgb(190,4,246)";
                 }
                 if (item.info.quality !== undefined) {
                     qualityLabel = item.info.quality.toFixed();
@@ -2643,7 +2777,7 @@ var requiredItemOpen = false;
         var per =(totalWeight/1000)/(data.maxweight/100000)
         $(".pro").css("width",per+"%");
         $("#player-inv-weight").html(
-            '<i class="fas fa-dumbbell"></i> ' +
+            '<i class="fas fa-suitcase"></i> ' +
             (totalWeight / 1000).toFixed(2) +
             "/" +
             (data.maxweight / 1000).toFixed(2)
@@ -2659,7 +2793,7 @@ var requiredItemOpen = false;
             } else {
                 $("#other-inv-label").html(data.other.label);
                 $("#other-inv-weight").html(
-                    '<i class="fas fa-dumbbell"></i> ' +
+                    '<i class="fas fa-weight-hanging"></i> ' +
                     (totalWeightOther / 1000).toFixed(2) +
                     "/" +
                     (data.other.maxweight / 1000).toFixed(2)
@@ -2672,7 +2806,7 @@ var requiredItemOpen = false;
         } else {
             $("#other-inv-label").html(Inventory.droplabel);
             $("#other-inv-weight").html(
-                '<i class="fas fa-dumbbell"></i> ' +
+                '<i class="fas fa-weight-hanging"></i> ' +
                 (totalWeightOther / 1000).toFixed(2) +
                 "/" +
                 (Inventory.dropmaxweight / 1000).toFixed(2)
@@ -2721,7 +2855,7 @@ var requiredItemOpen = false;
         if ($("#rob-money").length) {
             $("#rob-money").remove();
         }
-        $.post("https://lj-inventory/CloseInventory", JSON.stringify({}));
+        $.post("https://qb-inventory/CloseInventory", JSON.stringify({}));
 
         if (AttachmentScreenActive) {
             $("#qbcore-inventory").css({ left: "0vw" });
@@ -2842,7 +2976,7 @@ var requiredItemOpen = false;
         var per =(totalWeight/1000)/(data.maxweight/100000)
         $(".pro").css("width",per+"%");
         $("#player-inv-weight").html(
-            '<i class="fas fa-dumbbell"></i> ' +
+            '<i class="fas fa-suitcase"></i> ' +
             (totalWeight / 1000).toFixed(2) +
             "/" +
             (data.maxweight / 1000).toFixed(2)
@@ -3044,7 +3178,7 @@ $(document).on("click", "#rob-money", function(e) {
     e.preventDefault();
     var TargetId = $(this).data("TargetId");
     $.post(
-        "https://lj-inventory/RobMoney",
+        "https://qb-inventory/RobMoney",
         JSON.stringify({
             TargetId: TargetId,
         })
@@ -3067,7 +3201,7 @@ $("#item-give").droppable({
             amount = fromData.amount;
         }
         $.post(
-            "https://lj-inventory/GiveItem",
+            "https://qb-inventory/GiveItem",
             JSON.stringify({
                 inventory: fromInventory,
                 item: fromData,

@@ -2,7 +2,7 @@ fx_version 'cerulean'
 game 'gta5'
 
 description 'lj-Inventory'
-version '1.1'
+version '1.0'
 
 shared_scripts {
 	'config.lua',
@@ -29,7 +29,8 @@ files {
 	'html/images/*.jpg',
 	'html/ammo_images/*.png',
 	'html/attachment_images/*.png',
-	'html/*.ttf'
+	'html/*.ttf',
+	'html/fonts/MoldeCondensedBold.ttf',
 }
 
 
